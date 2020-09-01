@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const cors = require('cors');
 
-const users = require("./routes/api/users");
 const inspection = require("./routes/api/inspection");
 
 const app = express();
@@ -35,10 +34,9 @@ mongoose
 app.use(passport.initialize());
 
 // Passport config
-require("./config/passport")(passport);
+// require("./config/passport")(passport);
 
 // Routes
-app.use("/api/users", users);
 app.use("/api/inspection", inspection);
 
 const port = process.env.PORT || 5000;
