@@ -29,11 +29,13 @@ router.post("/data", async (req, res) => {
   } else {
     return res.json({ data: dataList.slice(0, 4), totalPages: Math.ceil(dataList.length / 4) });
   }
+});
 
-  console.log(req.body);
-  // Inspection.find({}, function (err, docs) {
-  //   return res.json(docs);
-  // })
+router.get("/get-by-id", (req, res) => {
+  Inspection.findOne({_id: req.query._id}, function (err, doc) {
+    if (err) return res.status(400).json(err);
+    return res.json(doc);
+  });
 });
 
 router.post("/upload-photos", (req, res) => {

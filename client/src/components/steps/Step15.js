@@ -51,11 +51,17 @@ class Step15 extends React.Component {
   }
 
   componentDidMount() {
-    let {roadTest} = this.state;
-    infos.map((info) => {
-      roadTest[info.name] = options[0]
-    });
-    this.setState({roadTest: roadTest});
+    let currentData = this.props.currentData;
+    let roadTest = new Object();
+    if (currentData.roadTest != null)
+      roadTest = currentData.roadTest;
+    else {
+      infos.map((info) => {
+        roadTest[info.name] = options[0];
+      });
+    }
+
+    this.setState({ roadTest: roadTest });
   }
 
   handleChangeOption = (name, value) => {
@@ -83,7 +89,7 @@ class Step15 extends React.Component {
   }
 
   render() {
-    let {isLoading} = true;
+    let { isLoading, roadTest } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -93,12 +99,18 @@ class Step15 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(roadTest).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={roadTest[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

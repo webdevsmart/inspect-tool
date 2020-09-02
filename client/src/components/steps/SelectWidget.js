@@ -10,9 +10,13 @@ import { ChevronDown } from "react-feather";
 
 class SelectWidget extends React.Component {
   state = {
-    [this.props.name]: null,
-    currentOption: this.props.options && this.props.options[0],
+    currentOption: null,
   };
+
+  componentDidMount() {
+    let currentOption = this.props.currentValue;
+    this.setState({currentOption});
+  }
 
   handleClick(value) {
     this.props.handleChange(this.props.name, value);

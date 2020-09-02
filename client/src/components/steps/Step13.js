@@ -42,11 +42,17 @@ class Step13 extends React.Component {
   }
 
   componentDidMount() {
-    let {underbody} = this.state;
-    infos.map((info) => {
-      underbody[info.name] = options[0]
-    });
-    this.setState({underbody: underbody});
+    let currentData = this.props.currentData;
+    let underbody = new Object();
+    if (currentData.underbody != null)
+      underbody = currentData.underbody;
+    else {
+      infos.map((info) => {
+        underbody[info.name] = options[0];
+      });
+    }
+
+    this.setState({ underbody: underbody });
   }
 
   handleChangeOption = (name, value) => {
@@ -74,7 +80,7 @@ class Step13 extends React.Component {
   }
 
   render() {
-    let {isLoading} = true;
+    let { isLoading, underbody } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -84,12 +90,18 @@ class Step13 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(underbody).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={underbody[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

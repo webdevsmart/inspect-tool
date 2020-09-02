@@ -14,6 +14,10 @@ const NewInspection = lazy(() =>
   import("./views/pages/NewInspection")
 )
 
+const EditInspection = lazy(() =>
+  import("./views/pages/EditInspection")
+)
+
 // Set Layout and Component Using App Route
 const RouteConfig = ({
   component: Component,
@@ -69,6 +73,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/new"
             component={NewInspection}
+          />
+          <AppRoute
+            path="/edit/:id"
+            component={EditInspection}
           />
         </Switch>
       </Router>

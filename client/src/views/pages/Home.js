@@ -4,7 +4,7 @@ import { Card, CardBody, Row, Col, Button } from "reactstrap"
 import queryString from "query-string"
 import { Award } from "react-feather"
 
-import ThumbViewConfig from "./DataListConfig"
+import InspectionList from "./InspectionList"
 
 import decorLeft from "../../assets/img/elements/decore-left.png"
 import decorRight from "../../assets/img/elements/decore-right.png"
@@ -42,7 +42,7 @@ class Home extends React.Component{
       </Card>
       <Row>
         <Col sm="12">
-          <ThumbViewConfig thumbView={true} parsedFilter={queryString.parse(this.props.location.search)}/>
+          <InspectionList thumbView={true} parsedFilter={queryString.parse(this.props.location.search)}/>
         </Col>
       </Row>
     </>

@@ -31,14 +31,38 @@ class Step3 extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
+      initialValues: null,
       isLoading: false,
       civility: "Mr",
       location: "Yammoussoukro",
     }
   }
+
+  componentDidMount() {
+    let currentData = this.props.currentData;
+    let initialValues = new Object();
+    if (currentData.ownerDetails != null) {
+      initialValues = currentData.ownerDetails;
+    }
+    else {
+      initialValues = {
+        firstname: "",
+        lastname: "",
+        inspectorName: "",
+        email: "",
+        phoneNumber: "",
+        reference: generateRandomId(),
+      }
+    }
+    this.setState({ initialValues });
+  }
+
   handleSubmit(values) {
     let currentData = this.props.currentData;
-    values = {...values, _id: this.props.currentData._id, civility: this.state.civility, location: this.state.location, fieldName: "owner_details"};
+    let ownerDetails = {
+      ...values, location: this.state.location, civility: this.state.civility
+    }
+    values = {...ownerDetails, _id: this.props.currentData._id, fieldName: "owner_details"};
     axios.post("/api/inspection/save-by-name", values)
     .then((res) => {
       this.setState({isLoading: false});
@@ -46,9 +70,7 @@ class Step3 extends React.Component {
         ...currentData,
         _id: res.data._id,
         ownerDetails: {
-          ...values,
-          civility: this.state.civility,
-          location: this.state.location
+          ...ownerDetails
         }
       }
       this.props.setCurrentData(newData);
@@ -58,149 +80,146 @@ class Step3 extends React.Component {
     });
   }
   render() {
-    let { isLoading } = this.state;
+    let { isLoading, initialValues } = this.state;
     return (
       <Card>
         <CardHeader>
           <CardTitle>Step3: Car Owner Details:</CardTitle>
         </CardHeader>
         <CardBody>
-          <Formik
-            initialValues={{
-              firstname: "",
-              lastname: "",
-              inspectorName: "",
-              email: "",
-              phoneNumber: "",
-              reference: generateRandomId(),
-            }}
-            validationSchema={formSchema}
-            onSubmit={this.handleSubmit}
-          >
-            {({ errors, touched }) => (
-              <Form>
-                <FormGroup>
-                  <Label for="civility">Civility</Label>
-                  <Input name="civility" type="select" name="select" id="civilitySelect" onChange={(e) => this.setState({civility: e.target.value})}>
-                    <option value="Mr">Mr</option>
-                    <option value="Ms">Ms</option>
-                    <option value="Miss">Miss</option>
-                  </Input>
-                </FormGroup>
-                <FormGroup className="my-3">
-                  <Label for="firstname">First Name</Label>
-                  <Field
-                    name="firstname"
-                    id="firstname"
-                    className={`form-control ${
-                      errors.firstname && touched.firstname && "is-invalid"
-                    }`}
-                  />
-                  {errors.firstname && touched.firstname ? (
-                    <div className="invalid-tooltip mt-25">
-                      {errors.firstname}
-                    </div>
-                  ) : null}
-                </FormGroup>
-                <FormGroup className="my-3">
-                  <Label for="lastname">Last Name</Label>
-                  <Field
-                    name="lastname"
-                    id="lastname"
-                    className={`form-control ${
-                      errors.lastname && touched.lastname && "is-invalid"
-                    }`}
-                  />
-                  {errors.lastname && touched.lastname ? (
-                    <div className="invalid-tooltip mt-25">
-                      {errors.lastname}
-                    </div>
-                  ) : null}
-                </FormGroup>
-
-                <FormGroup className="my-3">
-                  <Label for="lastname">Phone Number</Label>
-                  <Field
-                    name="phoneNumber"
-                    id="phoneNumber"
-                    className={`form-control ${
-                      errors.phoneNumber && touched.phoneNumber && "is-invalid"
-                    }`}
-                  />
-                  {errors.phoneNumber && touched.phoneNumber ? (
-                    <div className="invalid-tooltip mt-25">{errors.phoneNumber}</div>
-                  ) : null}
-                </FormGroup>
-                
-                <FormGroup className="my-3">
-                  <Label for="email">Email</Label>
-                  <Field
-                    type="email"
-                    name="email"
-                    id="email"
-                    className={`form-control ${
-                      errors.email && touched.email && "is-invalid"
-                    }`}
-                  />
-                  {errors.email && touched.email ? (
-                    <div className="invalid-tooltip mt-25">{errors.email}</div>
-                  ) : null}
-                </FormGroup>
-                
-                <FormGroup className="my-3">
-                  <Label for="lastname">Inspector Name</Label>
-                  <Field
-                    name="inspectorName"
-                    id="inspectorName"
-                    className={`form-control ${
-                      errors.inspectorName && touched.inspectorName && "is-invalid"
-                    }`}
-                  />
-                  {errors.inspectorName && touched.inspectorName ? (
-                    <div className="invalid-tooltip mt-25">
-                      {errors.inspectorName}
-                    </div>
-                  ) : null}
-                </FormGroup>
-
-                <FormGroup className="my-3">
-                  <Label for="location">Location</Label>
-                  <Input type="select" name="select" id="locationSelect" onChange={(e) => this.setState({location: e.target.value})}>
-                    <option value="Yammoussoukro">Yammoussoukro</option>
-                    <option value="Abidjan">Abidjan</option>
-                    <option value="Bouake">Bouake</option>
-                  </Input>
-                </FormGroup>
-
-                <FormGroup className="my-3">
-                  <Label for="lastname">Reference</Label>
-                  <Field
-                    name="reference"
-                    id="reference"
-                    className={`form-control`}
-                    readOnly
-                  />
-                </FormGroup>
-                <Button.Ripple color="primary" type="submit">
-                  {
-                    isLoading && (
-                      <>
-                        <Spinner color="white" size="sm" type="grow" />
-                        <span className="ml-50">Please wait ...</span>
-                      </>
-                    )
-                  }
-                  {
-                    !isLoading && (
-                      <>
-                        Submit
-                      </>
-                    )
-                  }
-                </Button.Ripple>
-              </Form>
-            )}
-          </Formik>
+          {
+            initialValues && (
+              <Formik
+                initialValues={initialValues}
+                validationSchema={formSchema}
+                onSubmit={this.handleSubmit}
+              >
+                {({ errors, touched }) => (
+                  <Form>
+                    <FormGroup>
+                      <Label for="civility">Civility</Label>
+                      <Input name="civility" type="select" name="select" id="civilitySelect" onChange={(e) => this.setState({civility: e.target.value})}>
+                        <option value="Mr">Mr</option>
+                        <option value="Ms">Ms</option>
+                        <option value="Miss">Miss</option>
+                      </Input>
+                    </FormGroup>
+                    <FormGroup className="my-3">
+                      <Label for="firstname">First Name</Label>
+                      <Field
+                        name="firstname"
+                        id="firstname"
+                        className={`form-control ${
+                          errors.firstname && touched.firstname && "is-invalid"
+                        }`}
+                      />
+                      {errors.firstname && touched.firstname ? (
+                        <div className="invalid-tooltip mt-25">
+                          {errors.firstname}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    <FormGroup className="my-3">
+                      <Label for="lastname">Last Name</Label>
+                      <Field
+                        name="lastname"
+                        id="lastname"
+                        className={`form-control ${
+                          errors.lastname && touched.lastname && "is-invalid"
+                        }`}
+                      />
+                      {errors.lastname && touched.lastname ? (
+                        <div className="invalid-tooltip mt-25">
+                          {errors.lastname}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+    
+                    <FormGroup className="my-3">
+                      <Label for="lastname">Phone Number</Label>
+                      <Field
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        className={`form-control ${
+                          errors.phoneNumber && touched.phoneNumber && "is-invalid"
+                        }`}
+                      />
+                      {errors.phoneNumber && touched.phoneNumber ? (
+                        <div className="invalid-tooltip mt-25">{errors.phoneNumber}</div>
+                      ) : null}
+                    </FormGroup>
+                    
+                    <FormGroup className="my-3">
+                      <Label for="email">Email</Label>
+                      <Field
+                        type="email"
+                        name="email"
+                        id="email"
+                        className={`form-control ${
+                          errors.email && touched.email && "is-invalid"
+                        }`}
+                      />
+                      {errors.email && touched.email ? (
+                        <div className="invalid-tooltip mt-25">{errors.email}</div>
+                      ) : null}
+                    </FormGroup>
+                    
+                    <FormGroup className="my-3">
+                      <Label for="lastname">Inspector Name</Label>
+                      <Field
+                        name="inspectorName"
+                        id="inspectorName"
+                        className={`form-control ${
+                          errors.inspectorName && touched.inspectorName && "is-invalid"
+                        }`}
+                      />
+                      {errors.inspectorName && touched.inspectorName ? (
+                        <div className="invalid-tooltip mt-25">
+                          {errors.inspectorName}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+    
+                    <FormGroup className="my-3">
+                      <Label for="location">Location</Label>
+                      <Input type="select" name="select" id="locationSelect" onChange={(e) => this.setState({location: e.target.value})}>
+                        <option value="Yammoussoukro">Yammoussoukro</option>
+                        <option value="Abidjan">Abidjan</option>
+                        <option value="Bouake">Bouake</option>
+                      </Input>
+                    </FormGroup>
+    
+                    <FormGroup className="my-3">
+                      <Label for="lastname">Reference</Label>
+                      <Field
+                        name="reference"
+                        id="reference"
+                        className={`form-control`}
+                        readOnly
+                      />
+                    </FormGroup>
+                    <Button.Ripple color="primary" type="submit">
+                      {
+                        isLoading && (
+                          <>
+                            <Spinner color="white" size="sm" type="grow" />
+                            <span className="ml-50">Please wait ...</span>
+                          </>
+                        )
+                      }
+                      {
+                        !isLoading && (
+                          <>
+                            Submit
+                          </>
+                        )
+                      }
+                    </Button.Ripple>
+                  </Form>
+                )}
+              </Formik>
+            )
+          }
         </CardBody>
       </Card>
     );

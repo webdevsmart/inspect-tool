@@ -48,11 +48,17 @@ class Step5 extends React.Component {
   }
 
   componentDidMount() {
-    let {transmission} = this.state;
-    infos.map((info) => {
-      transmission[info.name] = options[0]
-    });
-    this.setState({transmission: transmission});
+    let currentData = this.props.currentData;
+    let transmission = new Object();
+    if (currentData.transmission != null)
+      transmission = currentData.transmission;
+    else {
+      infos.map((info) => {
+        transmission[info.name] = options[0];
+      });
+    }
+
+    this.setState({ transmission: transmission });
   }
 
   handleChangeOption = (name, value) => {
@@ -80,7 +86,7 @@ class Step5 extends React.Component {
   }
 
   render() {
-    let {isLoading} = this.state;
+    let { isLoading, transmission } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -90,12 +96,18 @@ class Step5 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="justify-content-md-center mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(transmission).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={transmission[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

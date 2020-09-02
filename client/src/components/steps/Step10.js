@@ -42,11 +42,17 @@ class Step10 extends React.Component {
   }
 
   componentDidMount() {
-    let {exhaustSystem} = this.state;
-    infos.map((info) => {
-      exhaustSystem[info.name] = options[0]
-    });
-    this.setState({exhaustSystem: exhaustSystem});
+    let currentData = this.props.currentData;
+    let exhaustSystem = new Object();
+    if (currentData.exhaustSystem != null)
+      exhaustSystem = currentData.exhaustSystem;
+    else {
+      infos.map((info) => {
+        exhaustSystem[info.name] = options[0];
+      });
+    }
+
+    this.setState({ exhaustSystem: exhaustSystem });
   }
 
   handleChangeOption = (name, value) => {
@@ -74,7 +80,7 @@ class Step10 extends React.Component {
   }
 
   render() {
-    let {isLoading} = true;
+    let { exhaustSystem, isLoading } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -84,12 +90,18 @@ class Step10 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(exhaustSystem).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={exhaustSystem[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

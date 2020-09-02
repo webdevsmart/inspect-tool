@@ -49,11 +49,17 @@ class Step12 extends React.Component {
   }
 
   componentDidMount() {
-    let {bodyExterior} = this.state;
-    infos.map((info) => {
-      bodyExterior[info.name] = options[0]
-    });
-    this.setState({bodyExterior: bodyExterior});
+    let currentData = this.props.currentData;
+    let bodyExterior = new Object();
+    if (currentData.bodyExterior != null)
+      bodyExterior = currentData.bodyExterior;
+    else {
+      infos.map((info) => {
+        bodyExterior[info.name] = options[0];
+      });
+    }
+
+    this.setState({ bodyExterior: bodyExterior });
   }
 
   handleChangeOption = (name, value) => {
@@ -81,7 +87,7 @@ class Step12 extends React.Component {
   }
 
   render() {
-    let {isLoading} = true;
+    let { isLoading, bodyExterior } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -91,12 +97,18 @@ class Step12 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(bodyExterior).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={bodyExterior[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

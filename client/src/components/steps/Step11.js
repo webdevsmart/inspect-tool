@@ -61,11 +61,17 @@ class Step11 extends React.Component {
   }
 
   componentDidMount() {
-    let {bodyInterior} = this.state;
-    infos.map((info) => {
-      bodyInterior[info.name] = options[0]
-    });
-    this.setState({bodyInterior: bodyInterior});
+    let currentData = this.props.currentData;
+    let bodyInterior = new Object();
+    if (currentData.bodyInterior != null)
+      bodyInterior = currentData.bodyInterior;
+    else {
+      infos.map((info) => {
+        bodyInterior[info.name] = options[0];
+      });
+    }
+
+    this.setState({ bodyInterior: bodyInterior });
   }
 
   handleChangeOption = (name, value) => {
@@ -93,7 +99,7 @@ class Step11 extends React.Component {
   }
 
   render() {
-    let {isLoading} = true;
+    let { isLoading, bodyInterior } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -103,12 +109,18 @@ class Step11 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(bodyInterior).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={bodyInterior[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

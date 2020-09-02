@@ -68,11 +68,17 @@ class Step7 extends React.Component {
   }
 
   componentDidMount() {
-    let {electricalControls} = this.state;
-    infos.map((info) => {
-      electricalControls[info.name] = options[0]
-    });
-    this.setState({electricalControls: electricalControls});
+    let currentData = this.props.currentData;
+    let electricalControls = new Object();
+    if (currentData.electricalControls != null)
+      electricalControls = currentData.electricalControls;
+    else {
+      infos.map((info) => {
+        electricalControls[info.name] = options[0];
+      });
+    }
+
+    this.setState({ electricalControls: electricalControls });
   }
 
   handleChangeOption = (name, value) => {
@@ -101,7 +107,7 @@ class Step7 extends React.Component {
   }
 
   render() {
-    let {isLoading} = this.state;
+    let { isLoading, electricalControls } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -111,12 +117,18 @@ class Step7 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(electricalControls).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={electricalControls[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

@@ -53,11 +53,17 @@ class Step8 extends React.Component {
   }
 
   componentDidMount() {
-    let {frontSuspension} = this.state;
-    infos.map((info) => {
-      frontSuspension[info.name] = options[0]
-    });
-    this.setState({frontSuspension: frontSuspension});
+    let currentData = this.props.currentData;
+    let frontSuspension = new Object();
+    if (currentData.frontSuspension != null)
+      frontSuspension = currentData.frontSuspension;
+    else {
+      infos.map((info) => {
+        frontSuspension[info.name] = options[0];
+      });
+    }
+
+    this.setState({ frontSuspension: frontSuspension });
   }
 
   handleChangeOption = (name, value) => {
@@ -85,7 +91,7 @@ class Step8 extends React.Component {
   }
 
   render() {
-    let {isLoading} = true;
+    let { isLoading, frontSuspension } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -95,12 +101,18 @@ class Step8 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                infos.map((info, index) => {
+                Object.keys(frontSuspension).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={frontSuspension[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>

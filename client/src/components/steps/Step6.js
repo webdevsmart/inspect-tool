@@ -47,11 +47,17 @@ class Step6 extends React.Component {
   }
 
   componentDidMount() {
-    let {brakeSystem} = this.state;
-    infos.map((info) => {
-      brakeSystem[info.name] = options[0]
-    });
-    this.setState({brakeSystem: brakeSystem});
+    let currentData = this.props.currentData;
+    let brakeSystem = new Object();
+    if (currentData.brakeSystem != null)
+      brakeSystem = currentData.brakeSystem;
+    else {
+      infos.map((info) => {
+        brakeSystem[info.name] = options[0];
+      });
+    }
+
+    this.setState({ brakeSystem: brakeSystem });
   }
 
   handleChangeOption = (name, value) => {
@@ -79,7 +85,7 @@ class Step6 extends React.Component {
   }
 
   render() {
-    let {isLoading} = this.state;
+    let { isLoading, brakeSystem } = this.state;
     return (
       <React.Fragment>
         <Card>
@@ -88,13 +94,19 @@ class Step6 extends React.Component {
           </CardHeader>
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
-              {
-                infos.map((info, index) => {
+            {
+                Object.keys(brakeSystem).length != 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
-                      <SelectWidget handleChange={this.handleChangeOption} title={info.title} name={info.name} options={options}/>
+                      <SelectWidget
+                        handleChange={this.handleChangeOption}
+                        currentValue={brakeSystem[info.name]}
+                        title={info.title}
+                        name={info.name}
+                        options={options}
+                      />
                     </Col>
-                  )
+                  );
                 })
               }
             </Row>
