@@ -91,7 +91,6 @@ class EditInspection extends React.Component {
     axios.get(`/api/inspection/get-by-id?_id=${this.props.match.params.id}`)
     .then((res) => {
       const data = res.data
-      console.log(data);
       currentData.photos = data.photos ? data.photos : null
       currentData.vehicleDetails = data.vehicle_details ? data.vehicle_details : null
       currentData.ownerDetails = data.owner_details ? data.owner_details : null

@@ -16,6 +16,7 @@ import { Award } from "react-feather"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import classnames from "classnames"
+import * as Icon from "react-feather"
 
 import Step1 from "../../components/steps/Step1";
 import Step2 from "../../components/steps/Step2";
@@ -39,7 +40,25 @@ import decorRight from "../../assets/img/elements/decore-right.png"
 
 import "../../assets/scss/pages/dashboard-analytics.scss"
 
-const navs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+const steps = [
+  "photos",
+  "vehicleDetails",
+  "ownerDetails",
+  "engineCompartment",
+  "transmission",
+  "brakeSystem",
+  "electricalControls",
+  "frontSuspension",
+  "rearSuspension",
+  "exhaustSystem",
+  "bodyInterior",
+  "bodyExterior",
+  "underbody",
+  "tyres",
+  "roadTest",
+  "finalize"
+];
+
 class NewInspection extends React.Component {
   state = {
     activeStep: 0,
@@ -114,7 +133,7 @@ class NewInspection extends React.Component {
             <div className="">
               <Nav tabs className="nav-left">
                 {
-                  navs && navs.map((item, index) => {
+                  steps && steps.map((item, index) => {
                     return (
                       <NavItem key={index}>
                         <NavLink
@@ -125,6 +144,13 @@ class NewInspection extends React.Component {
                             this.toggle(index)
                           }}
                         >
+                          {
+                            currentData[item] ? (
+                              <Icon.Check color="green" size={16} className="mr-1 fonticon-wrap" />
+                            ) : (
+                              <Icon.XCircle color="red" size={16} className="mr-1 fonticon-wrap" />
+                            )
+                          }
                           Step {index + 1}
                         </NavLink>
                       </NavItem>
@@ -134,7 +160,7 @@ class NewInspection extends React.Component {
               </Nav>
               <TabContent activeTab={this.state.activeStep} className="mt-1">
                 {
-                  navs && navs.map((item, index) => {
+                  steps && steps.map((item, index) => {
                     return (
                       <TabPane tabId={index} key={index}>
                         {
