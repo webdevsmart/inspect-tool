@@ -47,6 +47,29 @@
   overflow: hidden;
   width: 15rem;
   height: 12rem;
+  position: relative;
+  &:hover {
+    .photo-hover-actions {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+.photo-hover-actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,.75);
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition: all ease-in-out .15s;
+  a {
+    border-radius: 4px;
+    padding: 5px;
+  }
 }
 .dz-img {
   display: block;

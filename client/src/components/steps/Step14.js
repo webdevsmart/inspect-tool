@@ -35,6 +35,19 @@ class Step14 extends React.Component {
     },
   };
 
+  componentDidMount() {
+    let currentData = this.props.currentData;
+    if (currentData.tyres !== null) {
+      this.setState({
+        frontRight: currentData.tyres.frontRight,
+        frontLeft: currentData.tyres.frontLeft,
+        rearLeft: currentData.tyres.rearLeft,
+        rearRight: currentData.tyres.rearRight,
+        spare: currentData.tyres.spare,
+      })
+    }
+  }
+
   handleChangeFrontRight = (e) => {
     let {frontRight} = this.state;
     frontRight[e.target.name] = e.target.value;
@@ -116,14 +129,14 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Manufacturer </Label>
-              <AvInput name="manufacturer" type="text" required onChange={(e) => this.handleChangeFrontRight(e)}/>
+              <AvInput name="manufacturer" type="text" required value={this.state.frontRight.manufacturer} onChange={(e) => this.handleChangeFrontRight(e)}/>
               <AvFeedback>Please enter valid Manufacturer</AvFeedback>
             </AvGroup>
           </Col>
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Size </Label>
-              <AvInput name="size" type="text" required onChange={(e) => this.handleChangeFrontRight(e)} />
+              <AvInput name="size" type="text" required value={this.state.frontRight.size} onChange={(e) => this.handleChangeFrontRight(e)} />
               <AvFeedback>Please enter valid Size</AvFeedback>
             </AvGroup>
           </Col>
@@ -145,7 +158,7 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Tread(mm) </Label>
-              <AvInput name="tread" type="text" required onChange={(e) => this.handleChangeFrontRight(e)} />
+              <AvInput name="tread" type="text" required value={this.state.frontRight.tread} onChange={(e) => this.handleChangeFrontRight(e)} />
               <AvFeedback>Please enter valid Tread</AvFeedback>
             </AvGroup>
           </Col>
@@ -159,14 +172,14 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Manufacturer </Label>
-              <AvInput name="manufacturer" type="text" required onChange={(e) => this.handleChangeFrontLeft(e)}/>
+              <AvInput name="manufacturer" type="text" required value={this.state.frontLeft.manufacturer} onChange={(e) => this.handleChangeFrontLeft(e)}/>
               <AvFeedback>Please enter valid Manufacturer</AvFeedback>
             </AvGroup>
           </Col>
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Size </Label>
-              <AvInput name="size" type="text" required onChange={(e) => this.handleChangeFrontLeft(e)} />
+              <AvInput name="size" type="text" required value={this.state.frontLeft.size} onChange={(e) => this.handleChangeFrontLeft(e)} />
               <AvFeedback>Please enter valid Size</AvFeedback>
             </AvGroup>
           </Col>
@@ -188,7 +201,7 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Tread(mm) </Label>
-              <AvInput name="tread" type="text" required onChange={(e) => this.handleChangeFrontLeft(e)} />
+              <AvInput name="tread" type="text" required value={this.state.frontLeft.tread} onChange={(e) => this.handleChangeFrontLeft(e)} />
               <AvFeedback>Please enter valid Tread</AvFeedback>
             </AvGroup>
           </Col>
@@ -202,14 +215,14 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Manufacturer </Label>
-              <AvInput name="manufacturer" type="text" required onChange={(e) => this.handleChangeRearRight(e)}/>
+              <AvInput name="manufacturer" type="text" required value={this.state.rearRight.manufacturer} onChange={(e) => this.handleChangeRearRight(e)}/>
               <AvFeedback>Please enter valid Manufacturer</AvFeedback>
             </AvGroup>
           </Col>
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Size </Label>
-              <AvInput name="size" type="text" required onChange={(e) => this.handleChangeRearRight(e)} />
+              <AvInput name="size" type="text" required value={this.state.rearRight.size} onChange={(e) => this.handleChangeRearRight(e)} />
               <AvFeedback>Please enter valid Size</AvFeedback>
             </AvGroup>
           </Col>
@@ -231,7 +244,7 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Tread(mm) </Label>
-              <AvInput name="tread" type="text" required onChange={(e) => this.handleChangeRearRight(e)} />
+              <AvInput name="tread" type="text" required value={this.state.rearRight.tread} onChange={(e) => this.handleChangeRearRight(e)} />
               <AvFeedback>Please enter valid Tread</AvFeedback>
             </AvGroup>
           </Col>
@@ -245,14 +258,14 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Manufacturer </Label>
-              <AvInput name="manufacturer" type="text" required onChange={(e) => this.handleChangeRearLeft(e)}/>
+              <AvInput name="manufacturer" type="text" required value={this.state.rearLeft.manufacturer} onChange={(e) => this.handleChangeRearLeft(e)}/>
               <AvFeedback>Please enter valid Manufacturer</AvFeedback>
             </AvGroup>
           </Col>
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Size </Label>
-              <AvInput name="size" type="text" required onChange={(e) => this.handleChangeRearLeft(e)} />
+              <AvInput name="size" type="text" required value={this.state.rearLeft.size} onChange={(e) => this.handleChangeRearLeft(e)} />
               <AvFeedback>Please enter valid Size</AvFeedback>
             </AvGroup>
           </Col>
@@ -274,7 +287,7 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Tread(mm) </Label>
-              <AvInput name="tread" type="text" required onChange={(e) => this.handleChangeRearLeft(e)} />
+              <AvInput name="tread" type="text" required value={this.state.rearLeft.tread} onChange={(e) => this.handleChangeRearLeft(e)} />
               <AvFeedback>Please enter valid Tread</AvFeedback>
             </AvGroup>
           </Col>
@@ -288,14 +301,14 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Manufacturer </Label>
-              <AvInput name="manufacturer" type="text" required onChange={(e) => this.handleChangeSpare(e)}/>
+              <AvInput name="manufacturer" type="text" required value={this.state.spare.manufacturer} onChange={(e) => this.handleChangeSpare(e)}/>
               <AvFeedback>Please enter valid Manufacturer</AvFeedback>
             </AvGroup>
           </Col>
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Size </Label>
-              <AvInput name="size" type="text" required onChange={(e) => this.handleChangeSpare(e)} />
+              <AvInput name="size" type="text" required value={this.state.spare.size} onChange={(e) => this.handleChangeSpare(e)} />
               <AvFeedback>Please enter valid Size</AvFeedback>
             </AvGroup>
           </Col>
@@ -317,7 +330,7 @@ class Step14 extends React.Component {
           <Col md="6" sm="12">
             <AvGroup>
               <Label> Tread(mm) </Label>
-              <AvInput name="tread" type="text" required onChange={(e) => this.handleChangeSpare(e)} />
+              <AvInput name="tread" type="text" required value={this.state.spare.tread} onChange={(e) => this.handleChangeSpare(e)} />
               <AvFeedback>Please enter valid Tread</AvFeedback>
             </AvGroup>
           </Col>

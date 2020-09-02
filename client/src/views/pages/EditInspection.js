@@ -66,7 +66,7 @@ class EditInspection extends React.Component {
     activeStep: 0,
     currentData: {
       _id: null,
-      photos: [],
+      photos: null,
       vehicleDetails: null,
       ownerDetails: null,
       engineCompartment: null,
@@ -85,27 +85,29 @@ class EditInspection extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({isLoading: true});
-    let {currentData} = this.state;
-    currentData._id = this.props.match.params.id;
+    this.setState({isLoading: true})
+    let {currentData} = this.state
+    currentData._id = this.props.match.params.id
     axios.get(`/api/inspection/get-by-id?_id=${this.props.match.params.id}`)
     .then((res) => {
-      const data = res.data;
-      currentData.vehicleDetails = data.vehicle_details ? data.vehicle_details : null;
-      currentData.ownerDetails = data.owner_details ? data.owner_details : null;
-      currentData.engineCompartment = data.engine_compartment ? data.engine_compartment : null;
-      currentData.transmission = data.transmission ? data.transmission : null;
-      currentData.brakeSystem = data.brake_system ? data.brake_system : null;
-      currentData.electricalControls = data.electrical_controls ? data.electrical_controls : null;
-      currentData.frontSuspension = data.front_suspension ? data.front_suspension : null;
-      currentData.rearSuspension = data.rear_suspension ? data.rear_suspension : null;
-      currentData.exhaustSystem = data.exhaust_system ? data.exhaust_system : null;
-      currentData.bodyInterior = data.body_interior ? data.body_interior : null;
-      currentData.bodyExterior = data.body_exterior ? data.body_exterior : null;
-      currentData.underbody = data.underbody ? data.underbody : null;
-      currentData.roadTest = data.road_test ? data.road_test : null;
-      currentData.tyres = data.tyres ?data.tyres : null;
-      this.setState({currentData, isLoading: false});
+      const data = res.data
+      console.log(data);
+      currentData.photos = data.photos ? data.photos : null
+      currentData.vehicleDetails = data.vehicle_details ? data.vehicle_details : null
+      currentData.ownerDetails = data.owner_details ? data.owner_details : null
+      currentData.engineCompartment = data.engine_compartment ? data.engine_compartment : null
+      currentData.transmission = data.transmission ? data.transmission : null
+      currentData.brakeSystem = data.brake_system ? data.brake_system : null
+      currentData.electricalControls = data.electrical_controls ? data.electrical_controls : null
+      currentData.frontSuspension = data.front_suspension ? data.front_suspension : null
+      currentData.rearSuspension = data.rear_suspension ? data.rear_suspension : null
+      currentData.exhaustSystem = data.exhaust_system ? data.exhaust_system : null
+      currentData.bodyInterior = data.body_interior ? data.body_interior : null
+      currentData.bodyExterior = data.body_exterior ? data.body_exterior : null
+      currentData.underbody = data.underbody ? data.underbody : null
+      currentData.roadTest = data.road_test ? data.road_test : null
+      currentData.tyres = data.tyres ? data.tyres : null
+      this.setState({currentData, isLoading: false})
     })
     .catch((error) => {
       console.log(error);
@@ -194,7 +196,7 @@ class EditInspection extends React.Component {
                     return (
                       <TabPane tabId={index} key={index}>
                         {
-                          index === 0 && ( <Step1 setCurrentData={this.setCurrentData} /> )
+                          index === 0 && ( <Step1 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
                           index == 1 && ( <Step2 currentData={currentData} /> )

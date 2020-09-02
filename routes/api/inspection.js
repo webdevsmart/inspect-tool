@@ -10,7 +10,7 @@ const Inspection = require("../../models/Inspection");
 const bodyParser = require("body-parser");
 
 const recorgnizeCountriesFromPlateNumber = require("../../utils");
-const { isObject } = require("util");
+const { isObject, inspect } = require("util");
 
 router.get("/initial-data", (req, res) => {
   Inspection.find({}, function (err, docs) {
@@ -38,11 +38,25 @@ router.get("/get-by-id", (req, res) => {
   });
 });
 
-router.post("/upload-photos", (req, res) => {
+router.post("/upload-photos", async (req, res) => {
   let photos = new Object;
   const form = new formidable.IncomingForm();
-  form.parse(req);
-
+  if (req.query._id != 'null') {
+    let inspection = await Inspection.findOne({_id: req.query._id});
+    let photos = inspection.photos ? inspection.photos : null;
+    if (photos != null) {
+      Object.keys(photos).map((key, index) => {
+        fs.unlinkSync(__dirname + '/../../uploads/' + photos[key])
+      })
+      const newData = {
+        $set: {
+          photos: null,
+        }
+      }
+      await Inspection.findOneAndUpdate({_id: req.query._id}, newData);
+    }
+  }
+  form.parse(req)
   form.on("fileBegin", function (name, file) {
     let currentTime = new Date().getTime();
     file.path = __dirname + '/../../uploads/' + currentTime + '.' + file.name.split('.')[1];
@@ -87,13 +101,26 @@ router.post("/upload-photos", (req, res) => {
           plateNumber: json.results[0]['plate'],
           provience: recogResult.extra,
         }
-        const newInspection = new Inspection({
-          photos: photos,
-          vehicle_details: vehicleDetails,
-        });
-        newInspection.save(function (err, doc) {
-          return res.json(doc);
-        });
+        if (req.query._id != 'null') {
+          const newData = {
+            $set: {
+              photos: photos,
+              vehicle_details: vehicleDetails
+            }
+          }
+          Inspection.findOneAndUpdate({_id: req.query._id}, newData, {new: true}, function (err, doc) {
+            return res.json(doc);
+          })
+        }
+        else {
+          const newInspection = new Inspection({
+            photos: photos,
+            vehicle_details: vehicleDetails,
+          });
+          newInspection.save(function (err, doc) {
+            return res.json(doc);
+          });
+        }
       })
       .catch((err) => {
       });

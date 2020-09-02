@@ -2,8 +2,8 @@ import React from "react"
 import { Navbar } from "reactstrap"
 import classnames from "classnames"
 import NavbarBookmarks from "./NavbarBookmarks"
-import NavbarUser from "./NavbarUser"
-import userImg from "../../../assets/img/portrait/small/avatar-s-11.jpg"
+// import NavbarUser from "./NavbarUser"
+// import userImg from "../../../assets/img/portrait/small/avatar-s-11.jpg"
 
 
 const ThemeNavbar = props => {
@@ -60,12 +60,12 @@ const ThemeNavbar = props => {
                   <h2 className="text-primary brand-text mb-0">Vuexy</h2>
                 </div>
               ) : null}
-              <NavbarUser
+              {/* <NavbarUser
                 handleAppOverlay={props.handleAppOverlay}
                 changeCurrentLang={props.changeCurrentLang}
                 userName="John Doe"
                 userImg={ userImg }
-              />
+              /> */}
             </div>
           </div>
         </div>

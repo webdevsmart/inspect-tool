@@ -16,6 +16,7 @@ import { Award } from "react-feather"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import classnames from "classnames"
+
 import Step1 from "../../components/steps/Step1";
 import Step2 from "../../components/steps/Step2";
 import Step3 from "../../components/steps/Step3";
@@ -44,10 +45,11 @@ class NewInspection extends React.Component {
     activeStep: 0,
     currentData: {
       _id: null,
-      photos: [],
+      photos: null,
       vehicleDetails: null,
       ownerDetails: null,
       engineCompartment: null,
+      transmission: null,
       brakeSystem: null,
       electricalControls: null,
       frontSuspension: null,
@@ -136,7 +138,7 @@ class NewInspection extends React.Component {
                     return (
                       <TabPane tabId={index} key={index}>
                         {
-                          index === 0 && ( <Step1 setCurrentData={this.setCurrentData} /> )
+                          index === 0 && ( <Step1 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
                           index == 1 && ( <Step2 currentData={currentData} /> )

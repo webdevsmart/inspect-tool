@@ -270,8 +270,8 @@ class InspectionList extends Component {
           cell: row => (
             <Progress
               className="w-100 mb-0"
-              color={getColorByProgress(parseInt(Object.keys(row).length / 16 * 100))}
-              value={ parseInt(Object.keys(row).length / 16 * 100) }
+              color={getColorByProgress(parseInt((Object.keys(row).length - 3) / 16 * 100))}
+              value={ parseInt((Object.keys(row).length - 3) / 16 * 100) }
             />
           )
         },
