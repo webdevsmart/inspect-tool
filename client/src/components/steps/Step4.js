@@ -115,16 +115,19 @@ class Step4 extends React.Component {
                 );
               }) }
             </Row>
-
-            <Button.Ripple color="primary" onClick={this.handleSubmit}>
-              {isLoading && (
-                <>
-                  <Spinner color="white" size="sm" type="grow" />
-                  <span className="ml-50">Please wait ...</span>
-                </>
-              )}
-              {!isLoading && <>Submit</>}
-            </Button.Ripple>
+            <Row>
+              <Col lg="12" className="text-sm-left text-center">
+                <Button.Ripple color="warning" onClick={this.handleSubmit}>
+                  {isLoading && (
+                    <>
+                      <Spinner color="white" size="sm" type="grow" />
+                      <span className="ml-50">Please wait ...</span>
+                    </>
+                  )}
+                  {!isLoading && <>Submit</>}
+                </Button.Ripple>
+              </Col>
+            </Row>
           </CardBody>
         </Card>
       </React.Fragment>

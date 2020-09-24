@@ -48,17 +48,16 @@ class ThumbView extends React.Component {
                   <img className="car-photo mb-2 mb-sm-0" src={emptyImage} />
                 )
               }
-              <div className="item-details ml-0 ml-sm-2 d-flex flex-column">
+              <div className="item-details ml-0 ml-sm-2 d-flex flex-column text-sm-left text-center">
                 {
                   item.vehicle_details && (
                     <>
                       <h4 className="text-warning">{item.vehicle_details.make} {item.vehicle_details.model} {item.vehicle_details.year}</h4>
-                      <span>{item.vehicle_details.plateNumber}</span>
+                      <span>{(item.vehicle_details.plateNumber).toUpperCase()}</span>
                       <span>{this.getCountries(item.vehicle_details.countries)}</span>
                     </>
                   )
                 }
-                
                 <span>{moment(item.date).format("DD/MM/YYYY - hh.mm A")}</span>
               </div>
             </div>

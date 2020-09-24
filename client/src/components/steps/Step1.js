@@ -207,8 +207,8 @@ class Step1 extends React.Component {
                 )}
                 <div className="w-100 text-center mt-2">
                   <Button.Ripple
-                    className="bg-gradient-success w-100"
-                    color="none"
+                    className="text-white w-100"
+                    color="warning"
                     onClick={this.submitPhotos}
                   >
                     {isLoading && (

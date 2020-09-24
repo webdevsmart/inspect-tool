@@ -34,9 +34,6 @@ import Step13 from "../../components/steps/Step13";
 import Step14 from "../../components/steps/Step14";
 import Step15 from "../../components/steps/Step15";
 
-
-import decorLeft from "../../assets/img/elements/decore-left.png"
-import decorRight from "../../assets/img/elements/decore-right.png"
 import homeLogo from "../../assets/img/logo/hom_logo.png";
 
 import "../../assets/scss/pages/dashboard-analytics.scss"
@@ -133,8 +130,6 @@ class EditInspection extends React.Component {
       <>
         <Card className="text-white sales-card">
           <CardBody className="text-center">
-            <img src={decorLeft} alt="card-img-left" className="img-left" />
-            <img src={decorRight} alt="card-img-right" className="img-right" />
             <div className="award-info text-center">
               <img src={homeLogo} height="50" className="mb-2" alt="homeLogo" />
               <div className="m-auto mb-0 w-50">

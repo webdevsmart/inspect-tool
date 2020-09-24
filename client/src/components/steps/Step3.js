@@ -198,23 +198,17 @@ class Step3 extends React.Component {
                         readOnly
                       />
                     </FormGroup>
-                    <Button.Ripple color="primary" type="submit">
-                      {
-                        isLoading && (
+                    <FormGroup className="text-sm-left text-center">
+                      <Button.Ripple color="warning" onClick={this.handleSubmit}>
+                        {isLoading && (
                           <>
                             <Spinner color="white" size="sm" type="grow" />
                             <span className="ml-50">Please wait ...</span>
                           </>
-                        )
-                      }
-                      {
-                        !isLoading && (
-                          <>
-                            Submit
-                          </>
-                        )
-                      }
-                    </Button.Ripple>
+                        )}
+                        {!isLoading && <>Submit</>}
+                      </Button.Ripple>
+                    </FormGroup>
                   </Form>
                 )}
               </Formik>
