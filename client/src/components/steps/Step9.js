@@ -12,14 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Rear Right Shock Absorbers", name: "rearRightShockAbsorbers" },
   { title: "Rear Left Shock Absorbers", name: "rearLeftShockAbsorbers" },
@@ -46,7 +38,7 @@ class Step9 extends React.Component {
       rearSuspension = currentData.rearSuspension;
     else {
       infos.map((info) => {
-        rearSuspension[info.name] = options[0];
+        rearSuspension[info.name] = "Nothing";
       });
     }
 
@@ -96,7 +88,6 @@ class Step9 extends React.Component {
                         currentValue={rearSuspension[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

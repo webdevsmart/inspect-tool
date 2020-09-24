@@ -83,7 +83,7 @@ class Step1 extends React.Component {
   }
 
   async componentDidMount() {
-    let initialPhotos = new Object();
+    let initialPhotos = {};
     let { photos, _id } = this.props.currentData;
     types.map((type) => {
       initialPhotos[type.value] = null;

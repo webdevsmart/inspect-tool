@@ -12,8 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = ["Not Available", "Broken", "Pass", "Good", "New"];
-
 const infos = [
   { title: "Coolant level", name: "coolantLevel" },
   { title: "Power Steering Fluid", name: "powerSteering" },
@@ -58,7 +56,7 @@ class Step4 extends React.Component {
       engineCompartment = currentData.engineCompartment;
     else {
       infos.map((info) => {
-        engineCompartment[info.name] = options[0];
+        engineCompartment[info.name] = "Nothing";
       });
     }
 
@@ -112,7 +110,6 @@ class Step4 extends React.Component {
                       currentValue={engineCompartment[info.name]}
                       title={info.title}
                       name={info.name}
-                      options={options}
                     />
                   </Col>
                 );

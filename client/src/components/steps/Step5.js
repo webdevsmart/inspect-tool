@@ -12,14 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Cassings", name: "cassings" },
   { title: "Mounthings", name: "mounthings" },
@@ -54,7 +46,7 @@ class Step5 extends React.Component {
       transmission = currentData.transmission;
     else {
       infos.map((info) => {
-        transmission[info.name] = options[0];
+        transmission[info.name] = "Nothing";
       });
     }
 
@@ -104,7 +96,6 @@ class Step5 extends React.Component {
                         currentValue={transmission[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

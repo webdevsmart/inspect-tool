@@ -30,57 +30,16 @@ import {
   filterData
 } from "../../redux/actions/data-list"
 
+import ThumbView from "../../components/common/ThumbView";
+
 import "../../assets/scss/plugins/extensions/react-paginate.scss"
 import "../../assets/scss/pages/data-list.scss"
 
-const getColorByProgress = (value) => {
-  if (value <= 25)
-    return "danger";
-  if (value <= 50 && value > 25)
-    return "warning";
-  if (value > 50 && value <= 75)
-    return "primary"
-  if (value > 75)
-    return "success";
-}
-
-const selectedStyle = {
-  rows: {
-    selectedHighlighStyle: {
-      backgroundColor: "rgba(115,103,240,.05)",
-      color: "#7367F0 !important",
-      boxShadow: "0 0 1px 0 #7367F0 !important",
-      "&:hover": {
-        transform: "translateY(0px) !important"
-      }
-    }
-  }
-}
-
-const ActionsComponent = props => {
-  return (
-    <div className="data-list-action">
-      <Link to={`/edit/${props.row._id}`}>
-        <Edit
-          className="cursor-pointer mr-1"
-          size={20}
-        />
-      </Link>
-      <Trash
-        className="cursor-pointer"
-        size={20}
-        onClick={() => {
-          props.deleteRow(props.row)
-        }}
-      />
-    </div>
-  )
-}
-
 const CustomHeader = props => {
   return (
-    <div className="data-list-header d-flex justify-content-between flex-wrap">
-      <div className="actions-right d-flex flex-wrap mt-sm-0 mt-2">
+    <div className="data-list-header d-flex justify-content-center flex-wrap">
+      <div className="actions-right d-flex align-items-center justify-content-center flex-wrap mt-sm-0 mt-2">
+        <span className="mx-2"> Rechercher et filtrer les rapports </span>
         <UncontrolledDropdown className="data-list-rows-dropdown mr-1 d-md-block d-none">
           <DropdownToggle color="" className="sort-dropdown">
             <span className="align-middle mx-50">
@@ -136,54 +95,6 @@ class InspectionList extends Component {
     data: [],
     totalPages: 0,
     currentPage: 0,
-    columns: [
-      {
-        name: "Plate Number",
-        selector: "plateNumber",
-        sortable: true,
-        minWidth: "300px",
-        cell: row => (
-          <></>
-        )
-      },
-      {
-        name: "Make",
-        selector: "make",
-        sortable: true,
-        minWidth: "300px",
-        cell: row => (
-          <></>
-        )
-      },
-      {
-        name: "Model",
-        selector: "model",
-        sortable: true,
-        minWidth: "300px",
-        cell: row => (
-          <></>
-        )
-      },
-      {
-        name: "Status",
-        selector: "status",
-        sortable: true,
-        cell: row => (
-          <>
-          </>
-        )
-      },
-      {
-        name: "Actions",
-        sortable: true,
-        cell: row => (
-          <ActionsComponent
-            row={row}
-            deleteRow={this.handleDelete}
-          />
-        )
-      }
-    ],
     allData: [],
     value: "",
     rowsPerPage: 4,
@@ -200,94 +111,6 @@ class InspectionList extends Component {
   componentDidMount() {
     this.props.getData(this.props.parsedFilter);
     this.props.getInitialData();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.thumbView) {
-      this.thumbView = false
-      let columns = [
-        {
-          name: "Photos",
-          selector: "photos",
-          minWidth: "400px",
-          cell: row => (
-            <ul className="list-unstyled users-list m-0 d-flex">
-              {
-                row.photos && Object.keys(row.photos).map(function (key, index) {
-                  return (
-                    <li className="avatar pull-up" key={key}>
-                      <img
-                        src={`/uploads/${row.photos[key]}`}
-                        alt="avatar"
-                        height="50"
-                        width="50"
-                        id="avatar1"
-                      />
-                    </li>
-                  )
-                })
-              }
-            </ul>
-          )
-        },
-        {
-          name: "Plate Number",
-          selector: "plateNumber",
-          sortable: true,
-          minWidth: "250px",
-          cell: row => (
-            <p>
-              {row.vehicle_details && row.vehicle_details.plateNumber}
-            </p>
-          )
-        },
-        {
-          name: "Make",
-          selector: "make",
-          sortable: true,
-          minWidth: "250px",
-          cell: row => (
-            <p>
-              {row.vehicle_details && row.vehicle_details.make}
-            </p>
-          )
-        },
-        {
-          name: "Model",
-          selector: "model",
-          sortable: true,
-          minWidth: "250px",
-          cell: row => (
-            <p>
-              {row.vehicle_details && row.vehicle_details.model}
-            </p>
-          )
-        },
-        {
-          name: "Status",
-          selector: "status",
-          sortable: false,
-          cell: row => (
-            <Progress
-              className="w-100 mb-0"
-              color={getColorByProgress(parseInt((Object.keys(row).length - 3) / 16 * 100))}
-              value={ parseInt((Object.keys(row).length - 3) / 16 * 100) }
-            />
-          )
-        },
-        {
-          name: "Actions",
-          sortable: true,
-          cell: row => (
-            <ActionsComponent
-              row={row}
-              deleteRow={this.handleDelete}
-            />
-          )
-        }
-      ]
-      this.setState({ columns })
-    }
   }
 
   handleFilter = e => {
@@ -318,7 +141,6 @@ class InspectionList extends Component {
 
   render() {
     let {
-      columns,
       data,
       allData,
       totalPages,
@@ -330,45 +152,57 @@ class InspectionList extends Component {
     return (
       <div
         className={`data-list thumb-view`}>
-        <DataTable
+        <CustomHeader
+          handleFilter={this.handleFilter}
+          handleRowsPerPage={this.handleRowsPerPage}
+          rowsPerPage={rowsPerPage}
+          total={totalRecords}
+          index={sortIndex}
+        />
+        {
+          value.length ? (
+            allData && allData.map((item, index) => {
+              return (
+                <ThumbView item={item} key={index} />
+              )
+            })
+          ) : (
+            data && data.map((item, index) => {
+              return (
+                <ThumbView item={item} key={index} />
+              )
+            })
+          )
+        }
+        {/* {
+          !value.length && 
+        } */}
+        {/* <DataTable
           columns={columns}
           data={value.length ? allData : data}
-          pagination
-          paginationServer
-          paginationComponent={() => (
-            <ReactPaginate
-              previousLabel={<ChevronLeft size={15} />}
-              nextLabel={<ChevronRight size={15} />}
-              breakLabel="..."
-              breakClassName="break-me"
-              pageCount={totalPages}
-              containerClassName="vx-pagination separated-pagination pagination-end pagination-sm mb-0 mt-2"
-              activeClassName="active"
-              forcePage={
-                this.props.parsedFilter.page
-                  ? parseInt(this.props.parsedFilter.page - 1)
-                  : 0
-              }
-              onPageChange={page => this.handlePagination(page)}
-            />
-          )}
-          noHeader
-          subHeader
           responsive
+          noHeader
           pointerOnHover
           selectableRowsHighlight
           customStyles={selectedStyle}
-          subHeaderComponent={
-            <CustomHeader
-              handleFilter={this.handleFilter}
-              handleRowsPerPage={this.handleRowsPerPage}
-              rowsPerPage={rowsPerPage}
-              total={totalRecords}
-              index={sortIndex}
-            />
-          }
           sortIcon={<ChevronDown />}
         />
+         */}
+        <ReactPaginate
+            previousLabel={<ChevronLeft size={15} />}
+            nextLabel={<ChevronRight size={15} />}
+            breakLabel="..."
+            breakClassName="break-me"
+            pageCount={totalPages}
+            containerClassName="vx-pagination separated-pagination pagination-end pagination-sm mb-0 mt-2"
+            activeClassName="active"
+            forcePage={
+              this.props.parsedFilter.page
+                ? parseInt(this.props.parsedFilter.page - 1)
+                : 0
+            }
+            onPageChange={page => this.handlePagination(page)}
+          />
         <div
           className={classnames("data-list-overlay")}
         />

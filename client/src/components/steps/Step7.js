@@ -12,15 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Starting System/Ignition Lock", name: "startingSystem" },
   { title: "Climate Control", name: "climateControl" },
@@ -60,7 +51,7 @@ class Step7 extends React.Component {
     super(props);
     this.state = {
       isLoading: false,
-      electricalControls: new Object(),
+      electricalControls: {},
     }
 
     this.handleChangeOption = this.handleChangeOption.bind(this);
@@ -69,12 +60,12 @@ class Step7 extends React.Component {
 
   componentDidMount() {
     let currentData = this.props.currentData;
-    let electricalControls = new Object();
+    let electricalControls = {};
     if (currentData.electricalControls != null)
       electricalControls = currentData.electricalControls;
     else {
       infos.map((info) => {
-        electricalControls[info.name] = options[0];
+        electricalControls[info.name] = "Nothing";
       });
     }
 
@@ -117,7 +108,7 @@ class Step7 extends React.Component {
           <CardBody style={{paddingBottom: '200px'}}>
             <Row className="mb-3">
               {
-                Object.keys(electricalControls).length != 0 && infos.map((info, index) => {
+                Object.keys(electricalControls).length !== 0 && infos.map((info, index) => {
                   return (
                     <Col lg="6" key={index}>
                       <SelectWidget
@@ -125,7 +116,6 @@ class Step7 extends React.Component {
                         currentValue={electricalControls[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

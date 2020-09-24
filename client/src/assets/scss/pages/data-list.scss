@@ -13,10 +13,11 @@
 // Data List
 
 .data-list {
-  header {
+  .data-list-header {
     display: block;
     background: transparent;
     padding: 0 1rem;
+    margin-bottom: 2rem;
     .add-new-btn {
       padding: 0.9rem 0.938rem;
     }
@@ -179,4 +180,8 @@
       }
     }
   }
+}
+img.car-photo {
+  object-fit: cover;
+  border-radius: 10px;
 }

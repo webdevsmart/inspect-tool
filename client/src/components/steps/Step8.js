@@ -12,15 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Steering Box", name: "steeringBox" },
   { title: "Steering Rack/Box", name: "steeringRack" },
@@ -59,7 +50,7 @@ class Step8 extends React.Component {
       frontSuspension = currentData.frontSuspension;
     else {
       infos.map((info) => {
-        frontSuspension[info.name] = options[0];
+        frontSuspension[info.name] = "Nothing";
       });
     }
 
@@ -67,8 +58,9 @@ class Step8 extends React.Component {
   }
 
   handleChangeOption = (name, value) => {
-    let {frontSuspension} = this.state;
+    let { frontSuspension } = this.state;
     frontSuspension[name] = value;
+    console.log(frontSuspension);
     this.setState({frontSuspension});
   }
 
@@ -109,7 +101,6 @@ class Step8 extends React.Component {
                         currentValue={frontSuspension[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

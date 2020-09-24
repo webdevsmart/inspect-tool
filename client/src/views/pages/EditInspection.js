@@ -12,7 +12,6 @@ import {
   NavItem,
   NavLink
 } from "reactstrap"
-import { Award } from "react-feather"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import classnames from "classnames"
@@ -38,6 +37,7 @@ import Step15 from "../../components/steps/Step15";
 
 import decorLeft from "../../assets/img/elements/decore-left.png"
 import decorRight from "../../assets/img/elements/decore-right.png"
+import homeLogo from "../../assets/img/logo/hom_logo.png";
 
 import "../../assets/scss/pages/dashboard-analytics.scss"
 
@@ -131,22 +131,17 @@ class EditInspection extends React.Component {
     let { currentData, isLoading } = this.state;
     return (
       <>
-        <Card className="bg-analytics text-white sales-card">
+        <Card className="text-white sales-card">
           <CardBody className="text-center">
             <img src={decorLeft} alt="card-img-left" className="img-left" />
             <img src={decorRight} alt="card-img-right" className="img-right" />
-            <div className="avatar avatar-xl bg-primary shadow avatar-dashboard mt-0">
-              <div className="avatar-content">
-                <Award className="text-white" size={28} />
-              </div>
-            </div>
             <div className="award-info text-center">
-              <h1 className="mb-2 text-white">Congratulations John,</h1>
+              <img src={homeLogo} height="50" className="mb-2" alt="homeLogo" />
               <div className="m-auto mb-0 w-50">
                 <Link to="/">
                   <Button.Ripple
                     block
-                    className="btn-block bg-gradient-info"
+                    className="btn-block bg-warning text-white"
                     color="none"
                   >
                     GO TO HOME
@@ -198,47 +193,47 @@ class EditInspection extends React.Component {
                           index === 0 && ( <Step1 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 1 && ( <Step2 currentData={currentData} /> )
+                          index === 1 && ( <Step2 currentData={currentData} /> )
                         }
                         {
-                          index == 2 && ( <Step3 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 2 && ( <Step3 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 3 && ( <Step4 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 3 && ( <Step4 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         
                         {
-                          index == 4 && ( <Step5 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 4 && ( <Step5 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 5 && ( <Step6 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 5 && ( <Step6 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 6 && ( <Step7 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 6 && ( <Step7 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 7 && ( <Step8 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 7 && ( <Step8 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 8 && ( <Step9 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 8 && ( <Step9 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 9 && ( <Step10 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 9 && ( <Step10 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 10 && ( <Step11 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 10 && ( <Step11 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 11 && ( <Step12 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 11 && ( <Step12 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 12 && ( <Step13 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 12 && ( <Step13 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 13 && ( <Step14 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 13 && ( <Step14 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                         {
-                          index == 14 && ( <Step15 setCurrentData={this.setCurrentData} currentData={currentData} /> )
+                          index === 14 && ( <Step15 setCurrentData={this.setCurrentData} currentData={currentData} /> )
                         }
                       </TabPane>
                     )

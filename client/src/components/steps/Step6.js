@@ -12,14 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "ABS Engagements", name: "abcEngagement" },
   { title: "Rear Right Disc Pads", name: "rearRightDiscPads" },
@@ -53,7 +45,7 @@ class Step6 extends React.Component {
       brakeSystem = currentData.brakeSystem;
     else {
       infos.map((info) => {
-        brakeSystem[info.name] = options[0];
+        brakeSystem[info.name] = "Nothing";
       });
     }
 
@@ -103,7 +95,6 @@ class Step6 extends React.Component {
                         currentValue={brakeSystem[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

@@ -24,8 +24,8 @@ const initialState = {
   
   const getIndex = (arr, arr2, arr3, params = {}) => {
     if (arr2.length > 0) {
-      let startIndex = arr.findIndex(i => i.id === arr2[0].id) + 1
-      let endIndex = arr.findIndex(i => i.id === arr2[arr2.length - 1].id) + 1
+      let startIndex = arr.findIndex(i => i._id === arr2[0]._id) + 1
+      let endIndex = arr.findIndex(i => i._id === arr2[arr2.length - 1]._id) + 1
       let finalArr = [startIndex, endIndex]
       return (arr3 = finalArr)
     } else {

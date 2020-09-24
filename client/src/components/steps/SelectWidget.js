@@ -1,12 +1,9 @@
 import React from "react";
 import {
-  UncontrolledButtonDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
   Label,
 } from "reactstrap";
-import { ChevronDown } from "react-feather";
+import Checkbox from "../@vuexy/checkbox/CheckboxesVuexy"
+import { Check, X } from "react-feather"
 
 class SelectWidget extends React.Component {
   state = {
@@ -18,9 +15,14 @@ class SelectWidget extends React.Component {
     this.setState({currentOption});
   }
 
-  handleClick(value) {
-    this.props.handleChange(this.props.name, value);
-    this.setState({ currentOption: value });
+  handleClick(e, value) {
+    let option = "Nothing";
+    if (e.target.checked === true)
+      option = value;
+    else
+      option = "Nothing";
+    this.setState({currentOption: option});
+    this.props.handleChange(this.props.name, option);
   }
 
   render() {
@@ -32,31 +34,21 @@ class SelectWidget extends React.Component {
           <Label className="font-medium-2 text-bold-600">
             {this.props.title}
           </Label>
-          <div className="dropdown d-inline-block">
-            <UncontrolledButtonDropdown>
-              <DropdownToggle color="flat-info" caret>
-                {currentOption}
-                <ChevronDown size={15} />
-              </DropdownToggle>
-              {
-                this.props.options && (
-                  <DropdownMenu>
-                    {this.props.options &&
-                      this.props.options.map((option, index) => {
-                        return (
-                          <DropdownItem
-                            onClick={(e) => this.handleClick(option)}
-                            key={index}
-                            tag="a"
-                          >
-                            {option}
-                          </DropdownItem>
-                        );
-                      })}
-                  </DropdownMenu>
-                )
-              }
-            </UncontrolledButtonDropdown>
+          <div>
+            <Checkbox
+              color="danger"
+              icon={<X className="vx-icon" size={32} />}
+              checked={currentOption === "No" ? true : false}
+              onChange={(e) => this.handleClick(e, "No")}
+              size="xl"
+            />
+            <Checkbox
+              color="success"
+              icon={<Check className="vx-icon" size={32} />}
+              checked={currentOption === "Yes" ? true : false}
+              onChange={(e) => this.handleClick(e, "Yes")}
+              size="xl"
+            />
           </div>
         </div>
       </React.Fragment>

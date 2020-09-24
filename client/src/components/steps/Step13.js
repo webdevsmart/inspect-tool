@@ -12,14 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Chassis", name: "chassis" },
   { title: "Strut Towers", name: "strutTowers" },
@@ -48,7 +40,7 @@ class Step13 extends React.Component {
       underbody = currentData.underbody;
     else {
       infos.map((info) => {
-        underbody[info.name] = options[0];
+        underbody[info.name] = "Nothing";
       });
     }
 
@@ -98,7 +90,6 @@ class Step13 extends React.Component {
                         currentValue={underbody[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

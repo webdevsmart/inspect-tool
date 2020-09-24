@@ -12,14 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Engine Performance", name: "enginePerformance" },
   { title: "Suspension Noise", name: "suspensionNoise" },
@@ -57,7 +49,7 @@ class Step15 extends React.Component {
       roadTest = currentData.roadTest;
     else {
       infos.map((info) => {
-        roadTest[info.name] = options[0];
+        roadTest[info.name] = "Nothing";
       });
     }
 
@@ -107,7 +99,6 @@ class Step15 extends React.Component {
                         currentValue={roadTest[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

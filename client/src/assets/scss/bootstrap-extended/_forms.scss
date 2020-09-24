@@ -305,11 +305,11 @@ select.form-control {
     }
     &:active:checked + .vx-checkbox {
       .vx-checkbox--check {
-        transform: translate(3px);
+        // transform: translate(3px);
         background-color: $primary;
         .vx-icon {
           opacity: 1;
-          transform: translate(6px);
+          // transform: translate(6px);
         }
       }
     }
@@ -331,7 +331,7 @@ select.form-control {
     border-style: solid;
     border-color: $vs-checkbox-radio-border-color;
     border-radius: 2px;
-    transform: rotate(-90deg);
+    // transform: rotate(-90deg);
     transition: all 0.2s ease;
     overflow: hidden;
     margin-right: 0.5rem;
@@ -343,16 +343,21 @@ select.form-control {
       width: $vs-checkbox-box-lg;
       height: $vs-checkbox-box-lg;
     }
+    &.vx-checkbox-xl {
+      width: $vs-checkbox-box-xl;
+      height: $vs-checkbox-box-xl;
+    }
     .vx-checkbox--check {
       width: 100%;
       height: 100%;
       position: absolute;
       display: flex;
       left: 0;
-      transform: translate(100%);
-      transform-origin: right;
+      // transform: translate(100%);
+      // transform-origin: right;
       transition: all 0.2s ease;
       z-index: 10;
+      background-color: $gray-600;
       .vx-icon {
         display: flex;
         justify-content: center;

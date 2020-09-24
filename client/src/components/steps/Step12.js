@@ -12,15 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Paintwork", name: "paintWork" },
   { title: "Mud Flaps", name: "mudFlaps" },
@@ -55,7 +46,7 @@ class Step12 extends React.Component {
       bodyExterior = currentData.bodyExterior;
     else {
       infos.map((info) => {
-        bodyExterior[info.name] = options[0];
+        bodyExterior[info.name] = "Nothing";
       });
     }
 
@@ -105,7 +96,6 @@ class Step12 extends React.Component {
                         currentValue={bodyExterior[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

@@ -12,14 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Manifold", name: "maniFold" },
   { title: "Pipes", name: "pipes" },
@@ -48,7 +40,7 @@ class Step10 extends React.Component {
       exhaustSystem = currentData.exhaustSystem;
     else {
       infos.map((info) => {
-        exhaustSystem[info.name] = options[0];
+        exhaustSystem[info.name] = "Nothing";
       });
     }
 
@@ -98,7 +90,6 @@ class Step10 extends React.Component {
                         currentValue={exhaustSystem[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );

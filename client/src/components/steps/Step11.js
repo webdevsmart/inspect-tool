@@ -12,15 +12,6 @@ import {
 import axios from "axios";
 import SelectWidget from "./SelectWidget";
 
-
-const options = [
-  "Not Available",
-  "Broken",
-  "Pass",
-  "Good",
-  "New"
-]
-
 const infos = [
   { title: "Steering Wheel", name: "steeringWheel" },
   { title: "Interior Sills/Door Shuts", name: "interiorSills" },
@@ -67,7 +58,7 @@ class Step11 extends React.Component {
       bodyInterior = currentData.bodyInterior;
     else {
       infos.map((info) => {
-        bodyInterior[info.name] = options[0];
+        bodyInterior[info.name] = "Nothing";
       });
     }
 
@@ -117,7 +108,6 @@ class Step11 extends React.Component {
                         currentValue={bodyInterior[info.name]}
                         title={info.title}
                         name={info.name}
-                        options={options}
                       />
                     </Col>
                   );
