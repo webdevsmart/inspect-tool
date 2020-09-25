@@ -30,11 +30,11 @@ class SelectWidget extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="list-group-item d-flex justify-content-between align-items-center">
+        <div className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
           <Label className="font-medium-2 text-bold-600">
             {this.props.title}
           </Label>
-          <div>
+          <div className="d-flex">
             <Checkbox
               color="danger"
               icon={<X className="vx-icon" size={32} />}

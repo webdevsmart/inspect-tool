@@ -330,11 +330,11 @@ select.form-control {
     border-width: $vs-checkbox-radio-border-width;
     border-style: solid;
     border-color: $vs-checkbox-radio-border-color;
-    border-radius: 2px;
+    // border-radius: 2px;
     // transform: rotate(-90deg);
     transition: all 0.2s ease;
     overflow: hidden;
-    margin-right: 0.5rem;
+    margin-right: 0.1rem;
     &.vx-checkbox-sm {
       width: $vs-checkbox-box-sm;
       height: $vs-checkbox-box-sm;
