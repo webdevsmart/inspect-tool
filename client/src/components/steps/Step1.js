@@ -19,15 +19,15 @@ import uplaodIcon from "../../assets/img/upload-icon.png";
 import emptyImage from "../../assets/img/empty.jpg";
 
 const types = [
-  { name: "Front of car", value: "front" },
-  { name: "Front left of car", value: "front_left" },
-  { name: "Left side of car", value: "left_side" },
-  { name: "Rear left of car", value: "rear_left" },
-  { name: "Rear of car (boot closed)", value: "rear_boot_closed" },
-  { name: "Rear of car (boot open)", value: "rear_boot_open" },
-  { name: "Rear right of car", value: "rear_right" },
-  { name: "Right side of car", value: "right_side" },
-  { name: "Front right of car", value: "front_right" },
+  { name: "Devant de la voiture", value: "front" },
+  { name: "Avant gauche de la voiture", value: "front_left" },
+  { name: "Côté gauche de la voiture", value: "left_side" },
+  { name: "Arrière gauche de la voiture", value: "rear_left" },
+  { name: "Arrière de la voiture (coffre fermé)", value: "rear_boot_closed" },
+  { name: "Arrière de la voiture (coffre ouvert)", value: "rear_boot_open" },
+  { name: "Arrière droit de la voiture", value: "rear_right" },
+  { name: "Côté droit de la voiture", value: "right_side" },
+  { name: "Avant droit de la voiture", value: "front_right" },
 ];
 
 function Dropzone(props) {
@@ -57,12 +57,12 @@ function Dropzone(props) {
         <p>
           <img src={uplaodIcon} width="50" height="50" alt="upload-icon" />
         </p>
-        <p>Please upload a photo for:</p>
+        <p>Veuillez ajouter une photo pour :</p>
         <span className="mb-1 font-large-1 text-dark text-bold-600">
           {props.photoType}
         </span>
         <Button.Ripple color="dark" disabled={props.disabled} onClick={open}>
-          take or choose photo
+          Prendre ou choisir une photo
         </Button.Ripple>
       </div>
     </section>
@@ -202,7 +202,7 @@ class Step1 extends React.Component {
                     className="w-100 text-center cursor-pointer mt-2"
                     onClick={(e) => this.skipStep(types[currentStep].value)}
                   >
-                    Or skip this step
+                    Sauter cette étape
                   </u>
                 )}
                 <div className="w-100 text-center mt-2">
@@ -217,7 +217,7 @@ class Step1 extends React.Component {
                         <span className="ml-50">Please wait ...</span>
                       </>
                     )}
-                    {!isLoading && <>Submit</>}
+                    {!isLoading && <>Envoyer</>}
                   </Button.Ripple>
                 </div>
               </Col>

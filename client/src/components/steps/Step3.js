@@ -206,7 +206,7 @@ class Step3 extends React.Component {
                             <span className="ml-50">Please wait ...</span>
                           </>
                         )}
-                        {!isLoading && <>Submit</>}
+                        {!isLoading && <>Envoyer</>}
                       </Button.Ripple>
                     </FormGroup>
                   </Form>

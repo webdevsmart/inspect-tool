@@ -10,8 +10,15 @@ import {
   TabPane,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledDropdown,
+  DropdownMenu,
+  DropdownToggle,
+  DropdownItem,
 } from "reactstrap"
+import {
+  ChevronDown,
+} from "react-feather"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import classnames from "classnames"
@@ -39,22 +46,22 @@ import homeLogo from "../../assets/img/logo/hom_logo.png";
 import "../../assets/scss/pages/dashboard-analytics.scss"
 
 const steps = [
-  "photos",
-  "vehicleDetails",
-  "ownerDetails",
-  "engineCompartment",
-  "transmission",
-  "brakeSystem",
-  "electricalControls",
-  "frontSuspension",
-  "rearSuspension",
-  "exhaustSystem",
-  "bodyInterior",
-  "bodyExterior",
-  "underbody",
-  "tyres",
-  "roadTest",
-  "finalize"
+  { name: "Photos", value: "photos" },
+  { name: "Vechilce Details" , value: "vehicleDetails" },
+  { name: "Owner Details" , value: "ownerDetails" },
+  { name: "Engine Compartment" , value: "engineCompartment" },
+  { name: "Transmission" , value: "transmission" },
+  { name: "Brake System" , value: "brakeSystem" },
+  { name: "Electrical Controls" , value: "electricalControls" },
+  { name: "Front Suspension" , value: "frontSuspension" },
+  { name: "Rear Suspension" , value: "rearSuspension" },
+  { name: "Exhaust System" , value: "exhaustSystem" },
+  { name: "Body Interior" , value: "bodyInterior" },
+  { name: "Body Exterior" , value: "bodyExterior" },
+  { name: "Underbody" , value: "underbody" },
+  { name: "Tyres" , value: "tyres" },
+  { name: "Road Test" , value: "roadTest" },
+  { name: "Finalize" , value: "finalize" },
 ];
 
 class EditInspection extends React.Component {
@@ -139,7 +146,7 @@ class EditInspection extends React.Component {
                     className="btn-block bg-warning text-white"
                     color="none"
                   >
-                    GO TO HOME
+                    RETOUR A L'ACCUEIL
                   </Button.Ripple>
                 </Link>
               </div>
@@ -151,8 +158,30 @@ class EditInspection extends React.Component {
             <CardTitle>Update Inspection</CardTitle>
           </CardHeader>
           <CardBody>
+            <div className="d-flex d-md-none align-items-center justify-content-between border-bottom">
+              <span className="text-dark">ETAPE {this.state.activeStep + 1} / 16</span>
+              <UncontrolledDropdown className="data-list-rows-dropdown d-block">
+                <DropdownToggle color="" className="sort-dropdown">
+                  <span className="align-middle mx-50 text-underline">
+                    { steps[this.state.activeStep].name }
+                  </span>
+                  <ChevronDown size={15} />
+                </DropdownToggle>
+                <DropdownMenu tag="div" right>
+                  {
+                    steps && steps.map((item, index) => {
+                      return (
+                        <DropdownItem tag="a" onClick={() => {this.setState({activeStep: index})}} key={index}>
+                          Step {index + 1}
+                        </DropdownItem>
+                      )
+                    })
+                  }
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </div>
             <div className="">
-              <Nav tabs className="nav-left">
+              <Nav tabs className="nav-left d-none d-md-flex">
                 {
                   !isLoading && steps && steps.map((item, index) => {
                     return (
@@ -166,7 +195,7 @@ class EditInspection extends React.Component {
                           }}
                         >
                           {
-                            currentData[item] ? (
+                            currentData[item.value] ? (
                               <Icon.Check color="green" size={16} className="mr-1 fonticon-wrap" />
                             ) : (
                               <Icon.XCircle color="red" size={16} className="mr-1 fonticon-wrap" />

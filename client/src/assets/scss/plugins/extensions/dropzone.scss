@@ -24,6 +24,7 @@
   }
 }
 .dz-thumb {
+  max-width: 100%;
   display: inline-block;
   border-radius: 2px;
   border: 1px solid #eaeaea;
@@ -45,8 +46,9 @@
   display: flex;
   min-width: 0;
   overflow: hidden;
-  width: 15rem;
+  width: 19rem;
   height: 12rem;
+  max-width: 100%;
   position: relative;
   &:hover {
     .photo-hover-actions {

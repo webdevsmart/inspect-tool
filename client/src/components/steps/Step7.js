@@ -131,7 +131,7 @@ class Step7 extends React.Component {
                       <span className="ml-50">Please wait ...</span>
                     </>
                   )}
-                  {!isLoading && <>Submit</>}
+                  {!isLoading && <>Envoyer</>}
                 </Button.Ripple>
               </Col>
             </Row>

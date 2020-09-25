@@ -135,7 +135,7 @@ class VuexyWizard extends React.Component {
                       <Button type="submit" color="primary">
                         {this.props.steps.length - 1 === i &&
                         !this.props.finishBtnText
-                          ? "Submit"
+                          ? "Envoyer"
                           : this.props.steps.length - 1 === i &&
                             this.props.finishBtnText
                           ? this.props.finishBtnText
