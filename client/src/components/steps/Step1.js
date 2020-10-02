@@ -17,6 +17,7 @@ import * as Icon from "react-feather";
 import "../../assets/scss/plugins/extensions/dropzone.scss";
 import uplaodIcon from "../../assets/img/upload-icon.png";
 import emptyImage from "../../assets/img/empty.jpg";
+import { toast } from "react-toastify"
 
 const types = [
   { name: "Devant de la voiture", value: "front" },
@@ -150,6 +151,8 @@ class Step1 extends React.Component {
         this.props.setCurrentData(newData);
       })
       .catch((error) => {
+        console.log(error.response.data);
+        toast.warning(JSON.stringify(error.response.data.message, null, 2))
         this.setState({ isLoading: false });
       });
   };

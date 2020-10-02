@@ -77,17 +77,29 @@ router.post("/upload-photos", async (req, res) => {
       },
       body: fileBuffer
     }, function (err, resp, data) {
+      if (err) {
+        return res.status(400).json({message: err});
+      }
       let body = new FormData();
-      body.append('upload', fileBuffer.toString('base64'));
+      body.append('upload', fs.createReadStream(__dirname + '/../../uploads/' + photos['front']));
       fetch("https://api.platerecognizer.com/v1/plate-reader/", {
           method: 'POST',
           headers: {
-              "Authorization": "Token 528ec607cc73b1439208b687aa0a9dfd343ff66e"
+              "Authorization": "Token 528ec607cc73b1439208b687aa0a9dfd343ff66e",
           },
           body: body
       }).then(res => res.json())
       .then(json => {
-        let recogResult = recorgnizeCountriesFromPlateNumber(json.results[0]['plate']);
+        if (json.status_code === 400) {
+          return res.status(400).json({message: "Platerecognizer API error!"});
+        }
+        let recogResult = {
+          result: "",
+          extra: "",
+        }
+        if (json.results.length !== 0) {
+          recogResult = recorgnizeCountriesFromPlateNumber(json.results[0]['plate']);
+        }
         const apiResults = JSON.parse(data);
         let detections = apiResults.detections;
         let vehicleDetails = {
@@ -98,7 +110,7 @@ router.post("/upload-photos", async (req, res) => {
           generation: detections[0].mmg[0].generation_name,
           colour: detections[0].color[0].name,
           countries: recogResult.result.toString(),
-          plateNumber: json.results[0]['plate'],
+          plateNumber: json.results.length === 0 ? '' : json.results[0]['plate'],
           provience: recogResult.extra,
         }
         if (req.query._id != 'null') {
@@ -123,6 +135,7 @@ router.post("/upload-photos", async (req, res) => {
         }
       })
       .catch((err) => {
+        return res.status(400).json({message: "Something went wrong. please try again."})
       });
     });
 
