@@ -122,8 +122,12 @@ class Step1 extends React.Component {
   };
 
   submitPhotos = (e) => {
-    this.setState({ isLoading: true });
     let { photos } = this.state;
+    if (Object.keys(photos).filter(x=>photos[x]!==null).length == 0) {
+      toast.error(JSON.stringify("Please input at least one photo.", null, 2))
+      return ;
+    }
+    this.setState({ isLoading: true });
     const config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -152,7 +156,7 @@ class Step1 extends React.Component {
       })
       .catch((error) => {
         console.log(error.response.data);
-        toast.warning(JSON.stringify(error.response.data.message, null, 2))
+        toast.error(JSON.stringify(error.response.data.message, null, 2));
         this.setState({ isLoading: false });
       });
   };

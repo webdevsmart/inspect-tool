@@ -41,6 +41,7 @@ router.get("/get-by-id", (req, res) => {
 router.post("/upload-photos", async (req, res) => {
   let photos = new Object;
   const form = new formidable.IncomingForm();
+  let firstPhoto = null;
   if (req.query._id != 'null') {
     let inspection = await Inspection.findOne({_id: req.query._id});
     let photos = inspection.photos ? inspection.photos : null;
@@ -61,13 +62,15 @@ router.post("/upload-photos", async (req, res) => {
     let currentTime = new Date().getTime();
     file.path = __dirname + '/../../uploads/' + currentTime + '.' + file.name.split('.')[1];
     photos[name] = currentTime + '.' + file.name.split('.')[1];
+    if (firstPhoto === null)
+      firstPhoto = currentTime + '.' + file.name.split('.')[1];
   });
 
   form.on("file", function (name, file) {
   });
   
   form.on("end", function() {
-    let fileBuffer = fs.readFileSync(__dirname + '/../../uploads/' + photos['front']);
+    let fileBuffer = fs.readFileSync(__dirname + '/../../uploads/' + firstPhoto);
     request({
       url: "https://api.carnet.ai/v2/mmg/detect?features=mm,mmg,color,angle",
       method: "POST",
@@ -81,7 +84,7 @@ router.post("/upload-photos", async (req, res) => {
         return res.status(400).json({message: err});
       }
       let body = new FormData();
-      body.append('upload', fs.createReadStream(__dirname + '/../../uploads/' + photos['front']));
+      body.append('upload', fs.createReadStream(__dirname + '/../../uploads/' + firstPhoto));
       fetch("https://api.platerecognizer.com/v1/plate-reader/", {
           method: 'POST',
           headers: {
